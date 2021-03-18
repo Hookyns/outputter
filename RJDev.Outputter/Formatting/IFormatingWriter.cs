@@ -5,7 +5,7 @@ namespace RJDev.Outputter.Formatting
     /// <summary>
     /// Output entry formater for sinks.
     /// </summary>
-    public interface IFormatingWriter //: ICustomFormatter, IFormatProvider
+    public interface IFormatingWriter
     {
         /// <summary>
         /// Format entry and write it to the output text writer.

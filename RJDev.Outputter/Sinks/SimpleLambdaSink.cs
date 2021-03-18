@@ -8,20 +8,21 @@ namespace RJDev.Outputter.Sinks
         /// <summary>
         /// Action used to output messages
         /// </summary>
-        private readonly Action<OutputEntry> labda;
+        private readonly Action<OutputEntry> lambda;
 
         /// <summary>
         /// Ctor
         /// </summary>
-        /// <param name="labda"></param>
-        public SimpleLambdaSink(Action<OutputEntry> labda)
+        /// <param name="lambda"></param>
+        public SimpleLambdaSink(Action<OutputEntry> lambda)
         {
-            this.labda = labda;
+            this.lambda = lambda;
         }
 
+        /// <inheritdoc />
         public Task Emit(OutputEntry entry)
         {
-            this.labda.Invoke(entry);
+            this.lambda.Invoke(entry);
             return Task.CompletedTask;
         }
     }

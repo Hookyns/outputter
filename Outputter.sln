@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RJDev.Outputter.Sinks.Conso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RJDev.Outputter.Tests", "RJDev.Outputter.Tests\RJDev.Outputter.Tests.csproj", "{E19905F5-3E10-4DE4-9813-BFB2280716FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outputter.Test.Console.App", "Outputter.Test.Console.App\Outputter.Test.Console.App.csproj", "{7382B980-4F24-40D4-A014-A7EE72DF75B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{E19905F5-3E10-4DE4-9813-BFB2280716FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E19905F5-3E10-4DE4-9813-BFB2280716FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E19905F5-3E10-4DE4-9813-BFB2280716FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7382B980-4F24-40D4-A014-A7EE72DF75B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7382B980-4F24-40D4-A014-A7EE72DF75B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7382B980-4F24-40D4-A014-A7EE72DF75B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7382B980-4F24-40D4-A014-A7EE72DF75B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
