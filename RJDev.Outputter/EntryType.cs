@@ -3,12 +3,11 @@ namespace RJDev.Outputter
 	public enum EntryType
 	{
 		General,
+        Major,
 		Minor,
-		Title,
+		Success,
 		Error,
 		Warn,
-		Info,
-		Debug,
-		StackTrace,
+		Info
 	}
 }

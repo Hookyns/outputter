@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RJDev.Outputter.Sinks;
@@ -37,23 +36,7 @@ namespace RJDev.Outputter
         public async Task Pipe(IOutputterSink sink)
         {
             // TODO: Make it right. Allow not awaiting returning Task -> like async void Pipe(). Exception must be handled right for this case.
-            // SynchronizationContext? capture = SynchronizationContext.Current;
-
-            try
-            {
-                await this.outputter.Pipe(sink);
-            }
-            catch (Exception)
-            {
-                throw;
-                // // If no context captured, rethrow, it'll be unhandled
-                // if (capture == null)
-                // {
-                //     throw;
-                // }
-                //
-                // capture.Post((o) => throw e, null);
-            }
+            await this.outputter.Pipe(sink);
         }
     }
 }

@@ -4,6 +4,8 @@ namespace RJDev.Outputter
 {
 	public class OutputEntry
     {
+        private object?[] args = new object?[0];
+
         /// <summary>
         /// Message template
         /// </summary>
@@ -12,13 +14,16 @@ namespace RJDev.Outputter
         /// <summary>
         /// Message args
         /// </summary>
-        public object?[] Args => this.FormattableString?.GetArguments() ?? new object?[0];
+        public object?[] Args => this.FormattableString?.GetArguments() ?? this.args;
 
         /// <summary>
         /// Original formatable string
         /// </summary>
         public FormattableString? FormattableString { get; }
         
+        /// <summary>
+        /// Type of entry
+        /// </summary>
         public EntryType EntryType { get; }
 
 		/// <summary>
@@ -37,16 +42,20 @@ namespace RJDev.Outputter
             this.EntryType = entryType;
 		}
 
-		/// <summary>
-		/// Ctor
-		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="entryType"></param>
-		public OutputEntry(string message, EntryType entryType)
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="entryType"></param>
+        /// <param name="args"></param>
+        public OutputEntry(string message, EntryType entryType, object?[] args)
         {
             this.Message = message;
             this.EntryType = entryType;
-		}
+            this.args = args;
+        }
+        
+        // public <TextToken>  GetTokens
 
         /// <inheritdoc />
         public override string ToString()

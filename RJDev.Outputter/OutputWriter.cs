@@ -23,60 +23,80 @@ namespace RJDev.Outputter
         /// Write message
         /// </summary>
         /// <param name="message"></param>
+        /// <param name="entryType"></param>
+        /// <param name="args"></param>
         /// <exception cref="InvalidOperationException"></exception>
-		public void Write(string message)
+        public void Write(StringCast message, EntryType entryType = EntryType.General, params object?[] args)
 		{
             if (this.outputter.Completed)
             {
                 throw new InvalidOperationException("Writing into completed writer.");
             }
 
-            this.outputter.Bufferblock.Post(new OutputEntry(message, EntryType.General));
+            this.outputter.Bufferblock.Post(new OutputEntry(message.String, entryType, args));
         }
 
         /// <summary>
         /// Write message
         /// </summary>
         /// <param name="message"></param>
+        /// <param name="args"></param>
         /// <exception cref="InvalidOperationException"></exception>
-		public void Write(FormattableString message)
+        public void Write(StringCast message, params object?[] args)
 		{
-            if (this.outputter.Completed)
-            {
-                throw new InvalidOperationException("Writing into completed writer.");
-            }
-            
-            this.outputter.Bufferblock.Post(new OutputEntry(message, EntryType.General));
-		}
+            this.Write(message, EntryType.General, args);
+        }
 
         /// <summary>
         /// Write message with new line
         /// </summary>
         /// <param name="message"></param>
+        /// <param name="entryType"></param>
+        /// <param name="args"></param>
         /// <exception cref="InvalidOperationException"></exception>
-		public void WriteLine(FormattableString message)
+        public void WriteLine(StringCast message, EntryType entryType = EntryType.General, params object?[] args)
 		{
-            if (this.outputter.Completed)
-            {
-                throw new InvalidOperationException("Writing into completed writer.");
-            }
-            
-            this.outputter.Bufferblock.Post(new OutputEntry(message + Environment.NewLine, EntryType.General));
+            this.Write(message, entryType, args);
+            this.Write(Environment.NewLine);
 		}
 		
         /// <summary>
         /// Write message with new line
         /// </summary>
         /// <param name="message"></param>
+        /// <param name="args"></param>
         /// <exception cref="InvalidOperationException"></exception>
-		public void WriteLine(string message)
+		public void WriteLine(StringCast message, params object?[] args)
 		{
+            this.WriteLine(message, EntryType.General, args);
+		}
+        
+        /// <summary>
+        /// Write message
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="entryType"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void Write(FormattableString message, EntryType entryType = EntryType.General)
+        {
             if (this.outputter.Completed)
             {
                 throw new InvalidOperationException("Writing into completed writer.");
             }
             
-            this.outputter.Bufferblock.Post(new OutputEntry(message + Environment.NewLine, EntryType.General));
-		}
+            this.outputter.Bufferblock.Post(new OutputEntry(message, entryType));
+        }
+
+        /// <summary>
+        /// Write message with new line
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="entryType"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void WriteLine(FormattableString message, EntryType entryType = EntryType.General)
+        {
+            this.Write(message, entryType);
+            this.WriteLine(string.Empty);
+        }
     }
 }
