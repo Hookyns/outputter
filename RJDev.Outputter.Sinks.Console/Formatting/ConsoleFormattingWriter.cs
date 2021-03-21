@@ -1,53 +1,77 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
-using Colorify;
-using Colorify.UI;
 using RJDev.Outputter.Formatting;
+using RJDev.Outputter.Parsing;
+using RJDev.Outputter.Sinks.Console.Themes;
 
 namespace RJDev.Outputter.Sinks.Console.Formatting
 {
     public class ConsoleFormattingWriter : IFormatingWriter
     {
         /// <summary>
-        /// Color theme.
+        /// Console sink options.
         /// </summary>
-        private readonly ITheme theme;
+        private readonly ConsoleSinkOptions consoleSinkOptions;
 
         /// <summary>
-        /// Text formatter.
+        /// Tokenizer instance
         /// </summary>
-        private readonly Formatter formatter;
-        
-        /// <summary>
-        /// Colorify's Format
-        /// </summary>
-        private readonly Format format;
+        private readonly Tokenizer tokenizer;
 
         /// <summary>
         /// Ctor
         /// </summary>
-        /// <param name="theme"></param>
-        public ConsoleFormattingWriter(ITheme theme)
+        /// <param name="consoleSinkOptions"></param>
+        public ConsoleFormattingWriter(ConsoleSinkOptions consoleSinkOptions)
         {
-            this.theme = theme;
-            this.format = new Format(theme);
-            this.formatter = new Formatter(this.format);
+            this.consoleSinkOptions = consoleSinkOptions;
+            this.tokenizer = new Tokenizer();
         }
 
         /// <inheritdoc />
         public void Write(OutputEntry entry, TextWriter outputTextWriter)
         {
-            // TODO: Set foreground and background colors by entry.EntryType from theme for whole write. Formatter will change just foreground color for special symbols.
+            // Get color of entry
+            Color color = this.consoleSinkOptions.Theme.GetColor(entry.EntryType);
+            ConsoleColor backgroundColor = color.Background ?? this.consoleSinkOptions.DefaultBackgroundColor;
             
-            if (entry.FormattableString != null)
+            // Set color for this entry
+            SetConsoleColors(color.Font, backgroundColor);
+
+            IEnumerable<IEntryToken> tokens = this.tokenizer.Tokenize(entry.MessageTemplate, entry.Args);
+
+            foreach (IEntryToken token in tokens)
             {
-                outputTextWriter.Write(entry.FormattableString.ToString(/*this.formatter*/));
+                // Try to set token color if defined in template
+                if (token.TokenType != TokenType.Text && this.consoleSinkOptions.Theme.TryGetTokenColor(token.TokenType, out Color tokenColor))
+                {
+                    SetConsoleColors(tokenColor.Font, tokenColor.Background ?? this.consoleSinkOptions.DefaultBackgroundColor);
+                }
+
+                token.Write(outputTextWriter, this.consoleSinkOptions.FormatProvider);
+                
+                // Restore entry color
+                SetConsoleColors(color.Font, backgroundColor);
             }
-            else
+        }
+
+        /// <summary>
+        /// Set console colors.
+        /// </summary>
+        /// <param name="foregroundColor"></param>
+        /// <param name="backgroundColor"></param>
+        private static void SetConsoleColors(ConsoleColor foregroundColor, ConsoleColor backgroundColor)
+        {
+            if (System.Console.ForegroundColor != foregroundColor)
             {
-                outputTextWriter.Write(entry.MessageTemplate, entry.Args);
+                System.Console.ForegroundColor = foregroundColor;
             }
-            
-            this.format.ResetColor();
+
+            if (System.Console.BackgroundColor != backgroundColor)
+            {
+                System.Console.BackgroundColor = backgroundColor;
+            }
         }
     }
 }

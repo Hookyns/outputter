@@ -1,48 +1,58 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
-using Colorify.UI;
-using RJDev.Outputter.Formatting;
 
 namespace RJDev.Outputter.Sinks.Console
 {
-    public class ConsoleSink : IOutputterSink
+    public class ConsoleSink : IOutputterSink, IDisposable
     {
         /// <summary>
-        /// Color theme.
+        /// Console sink options.
         /// </summary>
-        private readonly ITheme theme;
-
-        /// <summary>
-        /// Ouput formatter.
-        /// </summary>
-        private readonly IFormatingWriter formatter;
+        private readonly ConsoleSinkOptions options;
 
         /// <summary>
         /// Ctor
         /// </summary>
-        /// <param name="theme"></param>
-        /// <param name="formatter"></param>
-        public ConsoleSink(ITheme theme, IFormatingWriter formatter)
+        /// <param name="options"></param>
+        public ConsoleSink(ConsoleSinkOptions options)
         {
-            this.theme = theme;
-            this.formatter = formatter;
+            this.options = options;
+            this.Setup();
         }
 
         /// <inheritdoc />
         public Task Emit(OutputEntry entry)
         {
             TextWriter textWriter = this.GetOutputStream();
-            this.formatter.Write(entry, textWriter);
+            this.options.Formatter.Write(entry, textWriter);
             return Task.CompletedTask;
         }
 
         /// <summary>
-        /// Return console Out stream
+        /// Setup sink.
+        /// </summary>
+        private void Setup()
+        {
+            System.Console.OutputEncoding = this.options.ConsoleEncoding;
+        }
+
+        /// <summary>
+        /// Return console Out stream.
         /// </summary>
         /// <returns></returns>
         private TextWriter GetOutputStream()
         {
             return System.Console.Out;
+        }
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            // Reset console colors
+            System.Console.ResetColor();
         }
     }
 }
