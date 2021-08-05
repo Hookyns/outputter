@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks.Dataflow;
 
 namespace RJDev.Outputter
@@ -56,8 +57,7 @@ namespace RJDev.Outputter
         /// <exception cref="InvalidOperationException"></exception>
         public void WriteLine(StringCast message, EntryType entryType = EntryType.General, params object?[] args)
 		{
-            this.Write(message, entryType, args);
-            this.Write(Environment.NewLine);
+            this.Write(message.String + Environment.NewLine, entryType, args);
 		}
 		
         /// <summary>
@@ -95,8 +95,7 @@ namespace RJDev.Outputter
         /// <exception cref="InvalidOperationException"></exception>
         public void WriteLine(FormattableString message, EntryType entryType = EntryType.General)
         {
-            this.Write(message, entryType);
-            this.WriteLine(string.Empty);
+            this.Write(FormattableStringFactory.Create(message.Format + Environment.NewLine, message.GetArguments()), entryType);
         }
     }
 }

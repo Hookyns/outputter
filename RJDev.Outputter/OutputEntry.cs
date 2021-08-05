@@ -60,7 +60,12 @@ namespace RJDev.Outputter
         /// <inheritdoc />
         public override string ToString()
         {
-            return this.FormattableString?.ToString() ?? this.Message ?? string.Empty;
+            if (this.FormattableString == null)
+            {
+                return string.Format(this.Message ?? string.Empty, this.Args);
+            }
+            
+            return this.FormattableString.ToString();
         }
 	}
 }

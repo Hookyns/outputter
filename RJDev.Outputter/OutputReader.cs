@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using RJDev.Outputter.Sinks;
 
 namespace RJDev.Outputter
@@ -21,7 +20,7 @@ namespace RJDev.Outputter
         }
 
         /// <summary>
-        /// Wait and get text written to output.
+        /// Wait and get entry written to output.
         /// </summary>
         /// <returns></returns>
         public IAsyncEnumerable<OutputEntry> Read()
@@ -33,10 +32,9 @@ namespace RJDev.Outputter
         /// Pipe all writes into sink.
         /// </summary>
         /// <param name="sink"></param>
-        public async Task Pipe(IOutputterSink sink)
+        public OutputReaderChain Pipe(IOutputterSink sink)
         {
-            // TODO: Make it right. Allow not awaiting returning Task -> like async void Pipe(). Exception must be handled right for this case.
-            await this.outputter.Pipe(sink);
+            return new OutputReaderChain(this, sink, this.outputter.Pipe);
         }
     }
 }

@@ -103,12 +103,15 @@ namespace RJDev.Outputter
         /// <summary>
         /// Pipe all writes into sink.
         /// </summary>
-        /// <param name="sink"></param>
-        internal async Task Pipe(IOutputterSink sink)
+        /// <param name="sinks"></param>
+        internal async Task Pipe(IOutputterSink[] sinks)
         {
             await foreach (OutputEntry entry in this.Read())
             {
-                await sink.Emit(entry);
+                foreach (IOutputterSink sink in sinks)
+                {
+                    await sink.Emit(entry);
+                }
             }
         }
     }
