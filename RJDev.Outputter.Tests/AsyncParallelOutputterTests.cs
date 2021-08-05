@@ -6,37 +6,14 @@ using Xunit.Abstractions;
 
 namespace RJDev.Outputter.Tests
 {
-    public class OutputterTests
+    public class AsyncParallelOutputterTests
     {
         private readonly ITestOutputHelper outputHelper;
 
         // Test of writes
-        public OutputterTests(ITestOutputHelper outputHelper)
+        public AsyncParallelOutputterTests(ITestOutputHelper outputHelper)
         {
             this.outputHelper = outputHelper;
-        }
-
-        // Writing with Complete().
-        [Fact]
-        public async Task WriteTest()
-        {
-            var outputter = this.GetOutputter();
-            outputter.OutputWriter.WriteLine($"Hello World!");
-            outputter.OutputWriter.WriteLine($"Hello World! {2}");
-            outputter.OutputWriter.Write("Hello World!");
-            outputter.OutputWriter.Write($" IsThird: {true}");
-            outputter.Complete();
-        }
-
-        // Writing after Complete() throws Exception.
-        [Fact]
-        public async Task WriteAfterCompletedFailsTest()
-        {
-            var outputter = this.GetOutputter();
-            outputter.OutputWriter.WriteLine($"Hello World! {1}");
-            outputter.Complete();
-
-            Assert.Throws<InvalidOperationException>(() => { outputter.OutputWriter.WriteLine($"Hello World! {2}"); });
         }
 
         // Write few messages and then Read.
@@ -131,7 +108,7 @@ namespace RJDev.Outputter.Tests
             {
                 OutputWriter output = outputter.OutputWriter;
 
-                output.WriteLine($"Hello World!");
+                output.WriteLine("Hello World!");
                 await Task.Delay(300);
                 output.WriteLine($"Hello World! {2}");
                 await Task.Delay(300);
@@ -152,7 +129,7 @@ namespace RJDev.Outputter.Tests
 
             Task.Run(async () =>
             {
-                outputter.OutputWriter.WriteLine($"Hello World!");
+                outputter.OutputWriter.WriteLine("Hello World!");
                 await Task.Delay(300);
                 outputter.OutputWriter.WriteLine($"Hello World! {2}");
                 await Task.Delay(300);
