@@ -6,7 +6,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\RJDev.Outputter.Sinks.Console\RJDev.Outputter.Sinks.Console.csproj" />
 	  <ProjectReference Include="..\RJDev.Outputter\RJDev.Outputter.csproj" />
 	</ItemGroup>
 
