@@ -49,6 +49,16 @@ namespace RJDev.Outputter.Sinks.Console
         /// Format provider
         /// </summary>
         public IFormatProvider? FormatProvider { get; set; }
+        
+        /// <summary>
+        /// Console window width
+        /// </summary>
+        public int? WindowWidth { get; set; }
+        
+        /// <summary>
+        /// Console window height
+        /// </summary>
+        public int? WindowHeight { get; set; }
 
         /// <summary>
         /// Ctor

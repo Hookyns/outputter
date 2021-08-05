@@ -35,6 +35,16 @@ namespace RJDev.Outputter.Sinks.Console
         private void Setup()
         {
             System.Console.OutputEncoding = this.options.ConsoleEncoding;
+
+            if (this.options.WindowWidth.HasValue)
+            {
+                System.Console.WindowWidth = this.options.WindowWidth.Value;
+            }
+            
+            if (this.options.WindowHeight.HasValue)
+            {
+                System.Console.WindowHeight = this.options.WindowHeight.Value;
+            }
         }
 
         /// <summary>
