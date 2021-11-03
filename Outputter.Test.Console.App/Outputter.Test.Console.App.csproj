@@ -3,9 +3,12 @@
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net5.0</TargetFramework>
+		<StartupObject>ReadmeTokenizer</StartupObject>
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\RJDev.Outputter.Formatting.Json\RJDev.Outputter.Formatting.Json.csproj" />
+	  <ProjectReference Include="..\RJDev.Outputter.Sinks.Console\RJDev.Outputter.Sinks.Console.csproj" />
 	  <ProjectReference Include="..\RJDev.Outputter\RJDev.Outputter.csproj" />
 	</ItemGroup>
 

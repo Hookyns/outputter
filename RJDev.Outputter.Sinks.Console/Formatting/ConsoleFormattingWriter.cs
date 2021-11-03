@@ -32,6 +32,8 @@ namespace RJDev.Outputter.Sinks.Console.Formatting
         /// <inheritdoc />
         public void Write(OutputEntry entry, TextWriter outputTextWriter)
         {
+            (ConsoleColor currentForeground, ConsoleColor currentBackground) = GetCurrentColors();
+            
             // Get color of entry
             Color color = this.consoleSinkOptions.Theme.GetColor(entry.EntryType);
             ConsoleColor backgroundColor = color.Background ?? this.consoleSinkOptions.DefaultBackgroundColor;
@@ -54,6 +56,18 @@ namespace RJDev.Outputter.Sinks.Console.Formatting
                 // Restore entry color
                 SetConsoleColors(color.Font, backgroundColor);
             }
+            
+            // Restore original colors
+            SetConsoleColors(currentForeground, currentBackground);
+        }
+
+        /// <summary>
+        /// Get current colors set in console.
+        /// </summary>
+        /// <returns></returns>
+        private static (ConsoleColor foreground, ConsoleColor background) GetCurrentColors()
+        {
+            return (System.Console.ForegroundColor, System.Console.BackgroundColor);
         }
 
         /// <summary>

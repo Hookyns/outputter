@@ -25,7 +25,16 @@ namespace RJDev.Outputter.Parsing
         /// <inheritdoc />
         public void Write(TextWriter outputTextWriter, IFormatProvider? formatProvider = null)
         {
-            outputTextWriter.Write(this.Text);
+            outputTextWriter.Write(this.ToString());
+        }
+        
+        /// <summary>
+        /// Convert token to string.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return this.Text;
         }
     }
 }

@@ -47,12 +47,29 @@ namespace RJDev.Outputter.Parsing
         /// <inheritdoc />
         public void Write(TextWriter outputTextWriter, IFormatProvider? formatProvider = null)
         {
-            outputTextWriter.Write(
-                string.Format(
-                    formatProvider,
-                    string.IsNullOrWhiteSpace(this.Format) ? "{0}" : $"{{0:{this.Format}}}",
-                    this.Arg
-                )
+            outputTextWriter.Write(this.ToString(formatProvider));
+        }
+
+        /// <summary>
+        /// Convert token to string.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return this.ToString(null);
+        }
+
+        /// <summary>
+        /// Convert token to string.
+        /// </summary>
+        /// <param name="formatProvider"></param>
+        /// <returns></returns>
+        public string ToString(IFormatProvider? formatProvider)
+        {
+            return string.Format(
+                formatProvider,
+                string.IsNullOrWhiteSpace(this.Format) ? "{0}" : $"{{0:{this.Format}}}",
+                this.Arg
             );
         }
 

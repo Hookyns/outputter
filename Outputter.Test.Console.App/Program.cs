@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using RJDev.Outputter;
+using RJDev.Outputter.Formatting.Json;
 using RJDev.Outputter.Parsing;
 using RJDev.Outputter.Sinks;
+using RJDev.Outputter.Sinks.Console;
+using RJDev.Outputter.Sinks.Console.Themes;
 
 // namespace JetBrains.Annotations
 // {
@@ -17,23 +18,13 @@ using RJDev.Outputter.Sinks;
 //     }
 // }
 
-namespace Outputter.Test.Console.App
+namespace Test.Console.App
 {
-    class A
-    {
-        public string Foo { get; set; }
-        
-        public A()
-        {
-            
-        }
-    }
-    
     class Program
     {
         static async Task Main(string[] args)
         {
-            var outputter = new RJDev.Outputter.Outputter();
+            var outputter = new Outputter();
             
             Task writeTask = Task.Run(async () =>
             {
@@ -63,13 +54,14 @@ namespace Outputter.Test.Console.App
                 outputter.OutputWriter.WriteLine("Some info", EntryType.Info);
                 
                 outputter.OutputWriter.WriteLine("".PadLeft(80, '='), EntryType.Minor);
-                outputter.OutputWriter.WriteLine($"Visual testing finished \u2713 {DateTime.Now}", EntryType.Success);
+                outputter.OutputWriter.WriteLine($"Visual testing finished \u2713 {DateTime.Now}", EntryType.Success); // TODO: toto způsobí chybu
                 
                 
                 outputter.Complete();
             });
 
-            var tokenizer = new Tokenizer();
+            Tokenizer tokenizer = new();
+            JsonTokenizingFormatter jsonTokenFormatter = new();
             
             await outputter.OutputReader
                 .Pipe(new SimpleLambdaSink(entry =>
@@ -81,16 +73,10 @@ namespace Outputter.Test.Console.App
                         token.Write(System.Console.Out);
                     }
                 }))
+                .Pipe(new ConsoleSink(new ConsoleSinkOptions(ColorTheme.DarkConsole)))
                 .Pipe(new SimpleLambdaSink(entry =>
                 {
-                    IEnumerable<IEntryToken> tokens = tokenizer.Tokenize(entry.MessageTemplate, entry.Args);
-
-                    foreach (IEntryToken token in tokens)
-                    {
-                        System.Console.ForegroundColor = (TokenType.Argument & token.TokenType) != 0 ? ConsoleColor.Cyan : ConsoleColor.Red;
-                        token.Write(System.Console.Out);
-                        System.Console.ForegroundColor = ConsoleColor.White;
-                    }
+                    System.Console.WriteLine(jsonTokenFormatter.Format(entry));
                 }))
                 ;
 
