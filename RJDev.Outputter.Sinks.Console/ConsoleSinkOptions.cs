@@ -12,53 +12,53 @@ namespace RJDev.Outputter.Sinks.Console
         private IFormattingWriterFactory? formattingWriterFactory;
 
         /// <summary>
-        /// Console.encoding.
-        /// </summary>
-        public Encoding ConsoleEncoding { get; set; } = Encoding.Default;
-
-        /// <summary>
         /// Formatting writer.
         /// </summary>
-        public IFormatingWriter Formatter => this.formatter ??= this.FormattingWriterFactory.Create(this);
+        internal IFormatingWriter Formatter => this.formatter ??= this.FormattingWriterFactory.Create(this);
+
+        /// <summary>
+        /// Theme
+        /// </summary>
+        internal ColorTheme Theme { get; }
+
+        /// <summary>
+        /// Default system background color
+        /// </summary>
+        internal ConsoleColor DefaultBackgroundColor { get; }
+
+        /// <summary>
+        /// Default system font color.
+        /// </summary>
+        internal ConsoleColor DefaultFontColor { get; }
+
+        /// <summary>
+        /// Console.encoding.
+        /// </summary>
+        public Encoding ConsoleEncoding { internal get; set; } = Encoding.Default;
 
         /// <summary>
         /// Formatting writer factory.
         /// </summary>
         public IFormattingWriterFactory FormattingWriterFactory
         {
-            get => this.formattingWriterFactory ?? new DefaultFormattingWriterFactory();
+            internal get => this.formattingWriterFactory ?? new DefaultFormattingWriterFactory();
             set => this.formattingWriterFactory = value;
         }
 
         /// <summary>
-        /// Theme
-        /// </summary>
-        public ColorTheme Theme { get; }
-
-        /// <summary>
-        /// Default system background color
-        /// </summary>
-        public ConsoleColor DefaultBackgroundColor { get; }
-
-        /// <summary>
-        /// Default system font color.
-        /// </summary>
-        public ConsoleColor DefaultFontColor { get; }
-
-        /// <summary>
         /// Format provider
         /// </summary>
-        public IFormatProvider? FormatProvider { get; set; }
+        public IFormatProvider? FormatProvider { internal get; set; }
         
         /// <summary>
         /// Console window width
         /// </summary>
-        public int? WindowWidth { get; set; }
+        public int? WindowWidth { internal get; set; }
         
         /// <summary>
         /// Console window height
         /// </summary>
-        public int? WindowHeight { get; set; }
+        public int? WindowHeight { internal get; set; }
 
         /// <summary>
         /// Ctor

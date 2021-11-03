@@ -6,11 +6,11 @@ namespace RJDev.Outputter.Parsing
     public enum TokenType
     {
         Text = 1,
-        ArgumentGeneric = 2,
-        ArgumentStruct = 4,
-        ArgumentDateTime = 8,
-        ArgumentObject = 0x10,
-        
+        ArgumentGeneric = 1 << 1,
+        ArgumentStruct = 1 << 2,
+        ArgumentDateTime = 1 << 3,
+        ArgumentObject = 1 << 4,
+
         Argument = ArgumentGeneric | ArgumentStruct | ArgumentDateTime | ArgumentObject
     }
 }

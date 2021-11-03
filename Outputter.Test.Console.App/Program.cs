@@ -41,9 +41,9 @@ namespace Outputter.Test.Console.App
                 
                 output.WriteLine($"Hello World!");
                 await Task.Delay(300);
-                output.WriteLine($"Hello World! {2}");
+                output.WriteLine($"Hello World! {2:N}");
                 await Task.Delay(300);
-            
+                
                 output.WriteLine("Hello World! {0}", 10);
                 output.WriteLine("Hello World! {number}", new { number = 10 });
                 await Task.Delay(300);
@@ -61,7 +61,7 @@ namespace Outputter.Test.Console.App
                 outputter.OutputWriter.WriteLine("Some error happened", EntryType.Error);
                 outputter.OutputWriter.WriteLine("Some warn", EntryType.Warn);
                 outputter.OutputWriter.WriteLine("Some info", EntryType.Info);
-
+                
                 outputter.OutputWriter.WriteLine("".PadLeft(80, '='), EntryType.Minor);
                 outputter.OutputWriter.WriteLine($"Visual testing finished \u2713 {DateTime.Now}", EntryType.Success);
                 
@@ -87,7 +87,7 @@ namespace Outputter.Test.Console.App
 
                     foreach (IEntryToken token in tokens)
                     {
-                        System.Console.ForegroundColor = ConsoleColor.Red;
+                        System.Console.ForegroundColor = (TokenType.Argument & token.TokenType) != 0 ? ConsoleColor.Cyan : ConsoleColor.Red;
                         token.Write(System.Console.Out);
                         System.Console.ForegroundColor = ConsoleColor.White;
                     }
@@ -100,58 +100,6 @@ namespace Outputter.Test.Console.App
             // Tokenize($"\u2713 Hello {{{name}}} IsThird: {true:|isThird}");
             // System.Console.WriteLine();
             // Tokenize("\u2713 Hello {{{name}}} IsThird: {true}", new object?[]{ "World", true });
-        }
-        
-        static void Tokenize(FormattableString str)
-        {
-            var t = new Tokenizer();
-            System.Console.WriteLine(str.Format);
-            
-            foreach (var token in t.Tokenize(str.Format, str.GetArguments()))
-            {
-                token.Write(System.Console.Out);
-                // System.Console.WriteLine();
-            }
-        }
-
-        static void Tokenize(string str, object?[] args)
-        {
-            var t = new Tokenizer();
-            
-            foreach (var token in t.Tokenize(str, args))
-            {
-                token.Write(System.Console.Out);
-                // System.Console.WriteLine();
-            }
-        }
-
-        // static void Match(FormattableString message)
-        // {
-        //     Regex separator = new Regex(@"(?<!\{)\{|\}", RegexOptions.Compiled);
-        //     
-        //     foreach (string match in separator.Split(message.Format))
-        //     {
-        //         System.Console.WriteLine(match);
-        //     }
-        // }
-
-        static IEnumerable<string> Yield()
-        {
-            int i = 0;
-
-            do
-            {
-                System.Console.WriteLine("Yield: do start");
-
-                if (i == 0)
-                {
-                    yield return "1";
-                    System.Console.WriteLine("Yield after 1");
-                    i++;
-                }
-
-                yield return i.ToString();
-            } while (i < 10);
         }
     }
 }

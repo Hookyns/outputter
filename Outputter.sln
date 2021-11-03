@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outputter.Test.Console.App"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RJDev.Outputter.Sinks.Console.Tests", "RJDev.Outputter.Sinks.Console.Tests\RJDev.Outputter.Sinks.Console.Tests.csproj", "{3E6AA437-EC0D-47E7-B542-FCD7A7CFED0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RJDev.Outputter.Formatting.Json", "RJDev.Outputter.Formatting.Json\RJDev.Outputter.Formatting.Json.csproj", "{9C0E3545-9D45-4E73-B8D6-9E9747CFB141}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{3E6AA437-EC0D-47E7-B542-FCD7A7CFED0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E6AA437-EC0D-47E7-B542-FCD7A7CFED0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E6AA437-EC0D-47E7-B542-FCD7A7CFED0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C0E3545-9D45-4E73-B8D6-9E9747CFB141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C0E3545-9D45-4E73-B8D6-9E9747CFB141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C0E3545-9D45-4E73-B8D6-9E9747CFB141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C0E3545-9D45-4E73-B8D6-9E9747CFB141}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

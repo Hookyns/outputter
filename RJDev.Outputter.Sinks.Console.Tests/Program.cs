@@ -30,6 +30,7 @@ namespace RJDev.Outputter.Sinks.Console.Tests
                 var reader = outputter.OutputReader.Pipe(sink);
 
                 outputter.OutputWriter.WriteLine("Visual testing", EntryType.Major);
+                outputter.OutputWriter.WriteLine("{number} Hello World! {boolean}", new { number = 10, boolean = true });
                 outputter.OutputWriter.WriteLine("".PadLeft(80, '='), EntryType.Minor);
 
                 outputter.OutputWriter.WriteLine("Hello number {0:N4}!", Math.PI);

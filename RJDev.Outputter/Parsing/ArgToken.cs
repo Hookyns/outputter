@@ -16,7 +16,7 @@ namespace RJDev.Outputter.Parsing
         /// <summary>
         /// Format
         /// </summary>
-        public string Format { get; }
+        public string? Format { get; }
 
         /// <summary>
         /// Name of the property.
@@ -37,7 +37,7 @@ namespace RJDev.Outputter.Parsing
         /// <param name="propertyName"></param>
         /// <param name="format"></param>
         /// <param name="arg"></param>
-        public ArgToken(string propertyName, string format, object? arg)
+        public ArgToken(string propertyName, string? format, object? arg)
         {
             this.PropertyName = propertyName;
             this.Format = format;
@@ -47,7 +47,13 @@ namespace RJDev.Outputter.Parsing
         /// <inheritdoc />
         public void Write(TextWriter outputTextWriter, IFormatProvider? formatProvider = null)
         {
-            outputTextWriter.Write(string.Format(formatProvider, $"{{0:{this.Format}}}", this.Arg));
+            outputTextWriter.Write(
+                string.Format(
+                    formatProvider,
+                    string.IsNullOrWhiteSpace(this.Format) ? "{0}" : $"{{0:{this.Format}}}",
+                    this.Arg
+                )
+            );
         }
 
         /// <summary>
@@ -69,7 +75,7 @@ namespace RJDev.Outputter.Parsing
                 {
                     return TokenType.ArgumentDateTime;
                 }
-                
+
                 return TokenType.ArgumentStruct;
             }
 

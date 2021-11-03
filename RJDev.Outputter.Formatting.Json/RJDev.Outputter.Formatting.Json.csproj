@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Version>1.0.0</Version>
+		<RootNamespace>RJDev.Outputter.Formatting.Json</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\RJDev.Outputter\RJDev.Outputter.csproj" />
+	</ItemGroup>
+
+</Project>
