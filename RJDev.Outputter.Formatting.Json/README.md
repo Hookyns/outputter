@@ -16,4 +16,4 @@ await outputter.OutputReader
     ;
 ```
 
-Output of each formatted entry is JSON array with token objects `{ type: number, value: string }`.
+Output of each formatted entry is JSON object like `{ type: number, tokens: Array<{ type: number, value: string }> }`.

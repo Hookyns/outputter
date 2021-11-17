@@ -1,4 +1,5 @@
-using System.Text;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 using RJDev.Outputter.Parsing;
 
 namespace RJDev.Outputter.Formatting.Json
@@ -21,15 +22,14 @@ namespace RJDev.Outputter.Formatting.Json
         /// <inheritdoc />
         public string Format(OutputEntry entry)
         {
-            StringBuilder sb = new("[");
+            List<string> entries = new();
 
             foreach (var token in this.tokenizer.Tokenize(entry.MessageTemplate, entry.Args))
             {
-                sb.Append($"{{\"type\":{(int)token.TokenType},\"value\":\"{token.ToString().Replace("\n", "\\\\n").Replace("\r", "\\\\r".Replace("\t", "\\\\t"))}\"}}");
+                entries.Add($"{{\"type\":{(int)token.TokenType},\"value\":{JsonConvert.ToString(token.ToString())}}}");
             }
 
-            sb.Append(']');
-            return sb.ToString();
+            return $"{{\"type\":{(int)entry.EntryType},\"tokens\":[" + string.Join(",", entries) + "]}";
         }
     }
 }
