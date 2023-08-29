@@ -21,8 +21,8 @@ namespace RJDev.Outputter.Sinks.Console.Themes
         /// <param name="background"></param>
         public Color(ConsoleColor font, ConsoleColor? background)
         {
-            this.Font = font;
-            this.Background = background;
+            Font = font;
+            Background = background;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace RJDev.Outputter.Formatting.Json
         /// </summary>
         public JsonTokenizingFormatter()
         {
-            this.tokenizer = new Tokenizer();
+            tokenizer = new Tokenizer();
         }
 
         /// <inheritdoc />
@@ -24,7 +24,7 @@ namespace RJDev.Outputter.Formatting.Json
         {
             List<string> entries = new();
 
-            foreach (var token in this.tokenizer.Tokenize(entry.MessageTemplate, entry.Args))
+            foreach (var token in tokenizer.Tokenize(entry.MessageTemplate, entry.Args))
             {
                 entries.Add($"{{\"type\":{(int)token.TokenType},\"value\":{JsonConvert.ToString(token.ToString())}}}");
             }

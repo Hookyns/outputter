@@ -22,7 +22,7 @@ namespace RJDev.Outputter.Sinks
         /// <inheritdoc />
         public Task Emit(OutputEntry entry)
         {
-            this.lambda.Invoke(entry);
+            lambda.Invoke(entry);
             return Task.CompletedTask;
         }
     }

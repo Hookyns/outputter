@@ -20,7 +20,7 @@ namespace RJDev.Outputter.Tests
         [Fact]
         public async Task WriteReadTest()
         {
-            var outputter = this.GetOutputter();
+            var outputter = GetOutputter();
             outputter.OutputWriter.WriteLine($"Hello World!");
             outputter.OutputWriter.WriteLine($"Hello World! {2}");
             outputter.OutputWriter.Write("Hello World!");
@@ -29,7 +29,7 @@ namespace RJDev.Outputter.Tests
 
             await foreach (var entry in outputter.OutputReader.Read())
             {
-                this.outputHelper.WriteLine(entry.ToString());
+                outputHelper.WriteLine(entry.ToString());
             }
         }
 
@@ -37,7 +37,7 @@ namespace RJDev.Outputter.Tests
         [Fact]
         public async Task SecondReadFailsTest()
         {
-            var outputter = this.GetOutputter();
+            var outputter = GetOutputter();
             outputter.OutputWriter.WriteLine($"Hello World!");
             outputter.OutputWriter.WriteLine($"Hello World! {2}");
             outputter.OutputWriter.Write("Hello World!");
@@ -46,14 +46,14 @@ namespace RJDev.Outputter.Tests
 
             await foreach (var entry in outputter.OutputReader.Read())
             {
-                this.outputHelper.WriteLine(entry.ToString());
+                outputHelper.WriteLine(entry.ToString());
             }
 
             await Assert.ThrowsAsync<InvalidOperationException>(async () =>
             {
                 await foreach (var entry in outputter.OutputReader.Read())
                 {
-                    this.outputHelper.WriteLine(entry.ToString());
+                    outputHelper.WriteLine(entry.ToString());
                 }
             });
         }
@@ -62,7 +62,7 @@ namespace RJDev.Outputter.Tests
         [Fact]
         public async Task WriteReadParalelTest()
         {
-            var outputter = this.GetOutputter();
+            var outputter = GetOutputter();
 
             Task writeTask = Task.Run(async () =>
             {
@@ -82,7 +82,7 @@ namespace RJDev.Outputter.Tests
             {
                 await foreach (var entry in outputter.OutputReader.Read())
                 {
-                    this.outputHelper.WriteLine(entry.ToString());
+                    outputHelper.WriteLine(entry.ToString());
                 }
             });
 
@@ -93,13 +93,13 @@ namespace RJDev.Outputter.Tests
         [Fact]
         public async Task ReadFirstWithDelayTest()
         {
-            var outputter = this.GetOutputter();
+            var outputter = GetOutputter();
 
             Task readTask = Task.Run(async () =>
             {
                 await foreach (var entry in outputter.OutputReader.Read())
                 {
-                    this.outputHelper.WriteLine(entry.ToString());
+                    outputHelper.WriteLine(entry.ToString());
                     await Task.Delay(500);
                 }
             });
@@ -125,7 +125,7 @@ namespace RJDev.Outputter.Tests
         [Fact]
         public async Task ReadingByPipedSinkTest()
         {
-            var outputter = this.GetOutputter();
+            var outputter = GetOutputter();
 
             Task.Run(async () =>
             {
@@ -147,7 +147,7 @@ namespace RJDev.Outputter.Tests
             await outputter.OutputReader.Pipe(
                 new SimpleLambdaSink(entry =>
                 {
-                    this.outputHelper.WriteLine(entry.ToString());
+                    outputHelper.WriteLine(entry.ToString());
                     reads++;
                 })
             );

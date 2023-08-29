@@ -26,7 +26,7 @@ namespace RJDev.Outputter.Sinks.Console.Formatting
         public ConsoleFormattingWriter(ConsoleSinkOptions consoleSinkOptions)
         {
             this.consoleSinkOptions = consoleSinkOptions;
-            this.tokenizer = new Tokenizer();
+            tokenizer = new Tokenizer();
         }
 
         /// <inheritdoc />
@@ -35,23 +35,23 @@ namespace RJDev.Outputter.Sinks.Console.Formatting
             (ConsoleColor currentForeground, ConsoleColor currentBackground) = GetCurrentColors();
             
             // Get color of entry
-            Color color = this.consoleSinkOptions.Theme.GetColor(entry.EntryType);
-            ConsoleColor backgroundColor = color.Background ?? this.consoleSinkOptions.DefaultBackgroundColor;
+            Color color = consoleSinkOptions.Theme.GetColor(entry.EntryType);
+            ConsoleColor backgroundColor = color.Background ?? consoleSinkOptions.DefaultBackgroundColor;
             
             // Set color for this entry
             SetConsoleColors(color.Font, backgroundColor);
 
-            IEnumerable<IEntryToken> tokens = this.tokenizer.Tokenize(entry.MessageTemplate, entry.Args);
+            IEnumerable<IEntryToken> tokens = tokenizer.Tokenize(entry.MessageTemplate, entry.Args);
 
             foreach (IEntryToken token in tokens)
             {
                 // Try to set token color if defined in template
-                if (token.TokenType != TokenType.Text && this.consoleSinkOptions.Theme.TryGetTokenColor(token.TokenType, out Color tokenColor))
+                if (token.TokenType != TokenType.Text && consoleSinkOptions.Theme.TryGetTokenColor(token.TokenType, out Color tokenColor))
                 {
-                    SetConsoleColors(tokenColor.Font, tokenColor.Background ?? this.consoleSinkOptions.DefaultBackgroundColor);
+                    SetConsoleColors(tokenColor.Font, tokenColor.Background ?? consoleSinkOptions.DefaultBackgroundColor);
                 }
 
-                token.Write(outputTextWriter, this.consoleSinkOptions.FormatProvider);
+                token.Write(outputTextWriter, consoleSinkOptions.FormatProvider);
                 
                 // Restore entry color
                 SetConsoleColors(color.Font, backgroundColor);

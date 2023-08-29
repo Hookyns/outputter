@@ -19,13 +19,13 @@ namespace RJDev.Outputter.Parsing
         /// <param name="text"></param>
         public TextToken(string text)
         {
-            this.Text = text;
+            Text = text;
         }
 
         /// <inheritdoc />
         public void Write(TextWriter outputTextWriter, IFormatProvider? formatProvider = null)
         {
-            outputTextWriter.Write(this.ToString());
+            outputTextWriter.Write(ToString());
         }
         
         /// <summary>
@@ -34,7 +34,7 @@ namespace RJDev.Outputter.Parsing
         /// <returns></returns>
         public override string ToString()
         {
-            return this.Text;
+            return Text;
         }
     }
 }

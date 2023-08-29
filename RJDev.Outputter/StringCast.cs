@@ -15,7 +15,7 @@ namespace RJDev.Outputter
         /// <param name="str"></param>
         private StringCast(String str)
         {
-            this.String = str;
+            String = str;
         }
 
         /// <summary>

@@ -25,7 +25,7 @@ namespace RJDev.Outputter
         /// <returns></returns>
         public IAsyncEnumerable<OutputEntry> Read()
         {
-            return this.outputter.Read();
+            return outputter.Read();
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace RJDev.Outputter
         /// <param name="sink"></param>
         public OutputReaderChain Pipe(IOutputterSink sink)
         {
-            return new OutputReaderChain(this, sink, this.outputter.Pipe);
+            return new OutputReaderChain(this, sink, outputter.Pipe);
         }
     }
 }

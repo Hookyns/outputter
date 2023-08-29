@@ -10,7 +10,8 @@ namespace RJDev.Outputter.Parsing
         /// <summary>
         /// Regex parsing arguments format
         /// </summary>
-        private static readonly Regex PropertyNameMatcher = new("^([a-zA-Z0-9_@]+[a-zA-Z0-9_]*)(?::([^|]*)(?:\\|(.*))?)?", RegexOptions.Compiled);
+        private static readonly Regex PropertyNameMatcher =
+            new("^([a-zA-Z0-9_@]+[a-zA-Z0-9_]*)(?::([^|]*)(?:\\|(.*))?)?", RegexOptions.Compiled);
 
         /// <summary>
         /// Tokenize string format
@@ -90,7 +91,7 @@ namespace RJDev.Outputter.Parsing
                     arg
                         .GetType()
                         .GetProperties()
-                        .ToDictionary(x => x.Name, x => x.GetValue(arg, null))
+                        .ToDictionary(x => x.Name, x => x.GetValue(arg, null))!
                 );
             }
 
@@ -132,7 +133,12 @@ namespace RJDev.Outputter.Parsing
         /// <param name="argIndex"></param>
         /// <param name="objectArg"></param>
         /// <returns></returns>
-        private static ArgToken ParseArgToken(string format, object?[] args, int argIndex, Lazy<Dictionary<string, object?>?> objectArg)
+        private static ArgToken ParseArgToken(
+            string format,
+            object?[] args,
+            int argIndex,
+            Lazy<Dictionary<string, object?>?> objectArg
+        )
         {
             Match match = PropertyNameMatcher.Match(format);
             string property = format;
@@ -157,7 +163,8 @@ namespace RJDev.Outputter.Parsing
             return new ArgToken(
                 property,
                 formatting,
-                objectArg.Value?[property] ?? throw new InvalidOperationException("Single argument expected for strings using named parameters.")
+                objectArg.Value?[property] ??
+                throw new InvalidOperationException("Single argument expected for strings using named parameters.")
             );
         }
     }

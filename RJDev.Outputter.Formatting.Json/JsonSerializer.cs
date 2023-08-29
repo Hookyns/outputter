@@ -36,7 +36,7 @@ namespace RJDev.Outputter.Formatting.Json
         /// <param name="serializer"></param>
         public void AddTypeSerializer(Type forType, Func<object, string> serializer)
         {
-            this.typeSerializers[forType] = serializer;
+            typeSerializers[forType] = serializer;
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace RJDev.Outputter.Formatting.Json
 
             Type type = value.GetType();
 
-            if (this.typeSerializers.TryGetValue(type, out var specialSerializer))
+            if (typeSerializers.TryGetValue(type, out var specialSerializer))
             {
                 return specialSerializer(value);
             }

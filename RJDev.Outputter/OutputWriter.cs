@@ -29,12 +29,12 @@ namespace RJDev.Outputter
         /// <exception cref="InvalidOperationException"></exception>
         public void Write(StringCast message, EntryType entryType = EntryType.General, params object?[] args)
 		{
-            if (this.outputter.Completed)
+            if (outputter.Completed)
             {
                 throw new InvalidOperationException("Writing into completed writer.");
             }
 
-            this.outputter.Bufferblock.Post(new OutputEntry(message.String, entryType, args));
+            outputter.Bufferblock.Post(new OutputEntry(message.String, entryType, args));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace RJDev.Outputter
         /// <exception cref="InvalidOperationException"></exception>
         public void Write(StringCast message, params object?[] args)
 		{
-            this.Write(message, EntryType.General, args);
+            Write(message, EntryType.General, args);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace RJDev.Outputter
         /// <exception cref="InvalidOperationException"></exception>
         public void WriteLine(StringCast message, EntryType entryType = EntryType.General, params object?[] args)
 		{
-            this.Write(message.String + Environment.NewLine, entryType, args);
+            Write(message.String + Environment.NewLine, entryType, args);
 		}
 		
         /// <summary>
@@ -68,7 +68,7 @@ namespace RJDev.Outputter
         /// <exception cref="InvalidOperationException"></exception>
 		public void WriteLine(StringCast message, params object?[] args)
 		{
-            this.WriteLine(message, EntryType.General, args);
+            WriteLine(message, EntryType.General, args);
 		}
         
         /// <summary>
@@ -79,12 +79,12 @@ namespace RJDev.Outputter
         /// <exception cref="InvalidOperationException"></exception>
         public void Write(FormattableString message, EntryType entryType = EntryType.General)
         {
-            if (this.outputter.Completed)
+            if (outputter.Completed)
             {
                 throw new InvalidOperationException("Writing into completed writer.");
             }
             
-            this.outputter.Bufferblock.Post(new OutputEntry(message, entryType));
+            outputter.Bufferblock.Post(new OutputEntry(message, entryType));
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace RJDev.Outputter
         /// <exception cref="InvalidOperationException"></exception>
         public void WriteLine(FormattableString message, EntryType entryType = EntryType.General)
         {
-            this.Write(FormattableStringFactory.Create(message.Format + Environment.NewLine, message.GetArguments()), entryType);
+            Write(FormattableStringFactory.Create(message.Format + Environment.NewLine, message.GetArguments()), entryType);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace RJDev.Outputter
         {
             this.outputReader = outputReader;
             this.emitter = emitter;
-            this.sinkList.Add(firstSink);
+            sinkList.Add(firstSink);
         }
         
         /// <summary>
@@ -42,9 +42,9 @@ namespace RJDev.Outputter
         /// <returns></returns>
         public async IAsyncEnumerable<OutputEntry> Read()
         {
-            await foreach (OutputEntry entry in this.outputReader.Read())
+            await foreach (OutputEntry entry in outputReader.Read())
             {
-                foreach (var sink in this.sinkList)
+                foreach (var sink in sinkList)
                 {
                     await sink.Emit(entry);
                 }
@@ -59,7 +59,7 @@ namespace RJDev.Outputter
         /// <param name="sink"></param>
         public OutputReaderChain Pipe(IOutputterSink sink)
         {
-            this.sinkList.Add(sink);
+            sinkList.Add(sink);
             return this;
         }
 
@@ -69,7 +69,7 @@ namespace RJDev.Outputter
         /// <returns></returns>
         public TaskAwaiter GetAwaiter()
         {
-            return this.emitter(this.sinkList.ToArray()).GetAwaiter();
+            return emitter(sinkList.ToArray()).GetAwaiter();
         }
     }
 }

@@ -42,21 +42,21 @@ namespace RJDev.Outputter
         /// <summary>
         /// Message buffer.
         /// </summary>
-        internal BufferBlock<OutputEntry> Bufferblock => this.bufferblock;
+        internal BufferBlock<OutputEntry> Bufferblock => bufferblock;
 
         /// <summary>
         /// Ctor
         /// </summary>
         public Outputter(CancellationToken token = default)
         {
-            this.cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
-            this.bufferblock = new(new DataflowBlockOptions()
+            cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
+            bufferblock = new(new DataflowBlockOptions()
             {
-                CancellationToken = this.cancellationTokenSource.Token
+                CancellationToken = cancellationTokenSource.Token
             });
 
-            this.OutputWriter = new OutputWriter(this);
-            this.OutputReader = new OutputReader(this);
+            OutputWriter = new OutputWriter(this);
+            OutputReader = new OutputReader(this);
         }
 
         /// <summary>
@@ -64,13 +64,13 @@ namespace RJDev.Outputter
         /// </summary>
         public void Complete()
         {
-            if (this.Completed)
+            if (Completed)
             {
                 return;
             }
             
-            this.Completed = true;
-            this.bufferblock.Complete();
+            Completed = true;
+            bufferblock.Complete();
         }
 
         /// <summary>
@@ -79,25 +79,25 @@ namespace RJDev.Outputter
         /// <returns></returns>
         internal async IAsyncEnumerable<OutputEntry> Read()
         {
-            if (this.readCompleted)
+            if (readCompleted)
             {
                 throw new InvalidOperationException("Reading from completed reader.");
             }
 
-            while (await this.bufferblock.OutputAvailableAsync())
+            while (await bufferblock.OutputAvailableAsync())
             {
-                if (this.bufferblock.TryReceive(out OutputEntry? entry))
+                if (bufferblock.TryReceive(out OutputEntry? entry))
                 {
                     yield return entry;
                 }
             }
 
             // Invoke Completion of BufferBlock; Cancel token after timeout to prevent deadlock in case that some messages left in buffer
-            this.cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(5));
-            await this.bufferblock.Completion;
-            this.cancellationTokenSource.Dispose();
+            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(5));
+            await bufferblock.Completion;
+            cancellationTokenSource.Dispose();
 
-            this.readCompleted = true;
+            readCompleted = true;
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace RJDev.Outputter
         /// <param name="sinks"></param>
         internal async Task Pipe(IOutputterSink[] sinks)
         {
-            await foreach (OutputEntry entry in this.Read())
+            await foreach (OutputEntry entry in Read())
             {
                 foreach (IOutputterSink sink in sinks)
                 {

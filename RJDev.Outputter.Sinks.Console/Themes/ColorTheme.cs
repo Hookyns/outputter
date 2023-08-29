@@ -66,7 +66,7 @@ namespace RJDev.Outputter.Sinks.Console.Themes
 		/// <param name="color"></param>
 		public void Add(EntryType entryType, Color color)
 		{
-			this.colors.Add(entryType, color);
+			colors.Add(entryType, color);
 		}
 
         /// <summary>
@@ -76,13 +76,13 @@ namespace RJDev.Outputter.Sinks.Console.Themes
 		/// <param name="color"></param>
 		public void Add(TokenType tokenType, Color color)
 		{
-			this.tokenColors.Add(tokenType, color);
+			tokenColors.Add(tokenType, color);
 		}
 
 		/// <inheritdoc />
 		public IEnumerator GetEnumerator()
 		{
-			return this.colors.GetEnumerator();
+			return colors.GetEnumerator();
 		}
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace RJDev.Outputter.Sinks.Console.Themes
         /// <exception cref="KeyNotFoundException"></exception>
         public Color GetColor(EntryType entryType)
         {
-            if (!this.colors.TryGetValue(entryType, out Color color))
+            if (!colors.TryGetValue(entryType, out Color color))
             {
                 throw new KeyNotFoundException($"No color in theme found for EntryType {entryType}.");
             }
@@ -110,7 +110,7 @@ namespace RJDev.Outputter.Sinks.Console.Themes
         /// <exception cref="KeyNotFoundException"></exception>
         public bool TryGetTokenColor(TokenType tokenType, out Color color)
         {
-            return this.tokenColors.TryGetValue(tokenType, out color);
+            return tokenColors.TryGetValue(tokenType, out color);
         }
     }
 }

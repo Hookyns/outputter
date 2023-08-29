@@ -11,7 +11,7 @@ namespace RJDev.Outputter.Parsing
         private TokenType? tokeType;
 
         /// <inheritdoc />
-        public TokenType TokenType => this.tokeType ??= this.GetTokenType();
+        public TokenType TokenType => tokeType ??= GetTokenType();
 
         /// <summary>
         /// Format
@@ -39,15 +39,15 @@ namespace RJDev.Outputter.Parsing
         /// <param name="arg"></param>
         public ArgToken(string propertyName, string? format, object? arg)
         {
-            this.PropertyName = propertyName;
-            this.Format = format;
-            this.Arg = arg;
+            PropertyName = propertyName;
+            Format = format;
+            Arg = arg;
         }
 
         /// <inheritdoc />
         public void Write(TextWriter outputTextWriter, IFormatProvider? formatProvider = null)
         {
-            outputTextWriter.Write(this.ToString(formatProvider));
+            outputTextWriter.Write(ToString(formatProvider));
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace RJDev.Outputter.Parsing
         /// <returns></returns>
         public override string ToString()
         {
-            return this.ToString(null);
+            return ToString(null);
         }
 
         /// <summary>
@@ -68,8 +68,8 @@ namespace RJDev.Outputter.Parsing
         {
             return string.Format(
                 formatProvider,
-                string.IsNullOrWhiteSpace(this.Format) ? "{0}" : $"{{0:{this.Format}}}",
-                this.Arg
+                string.IsNullOrWhiteSpace(Format) ? "{0}" : $"{{0:{Format}}}",
+                Arg
             );
         }
 
@@ -79,12 +79,12 @@ namespace RJDev.Outputter.Parsing
         /// <returns></returns>
         private TokenType GetTokenType()
         {
-            if (this.Arg == null)
+            if (Arg == null)
             {
                 return TokenType.ArgumentGeneric;
             }
 
-            Type type = this.Arg.GetType();
+            Type type = Arg.GetType();
 
             if (type.IsValueType)
             {

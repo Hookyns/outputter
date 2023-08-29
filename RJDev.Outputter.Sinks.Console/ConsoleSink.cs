@@ -18,14 +18,14 @@ namespace RJDev.Outputter.Sinks.Console
         public ConsoleSink(ConsoleSinkOptions options)
         {
             this.options = options;
-            this.Setup();
+            Setup();
         }
 
         /// <inheritdoc />
         public Task Emit(OutputEntry entry)
         {
-            TextWriter textWriter = this.GetOutputStream();
-            this.options.Formatter.Write(entry, textWriter);
+            TextWriter textWriter = GetOutputStream();
+            options.Formatter.Write(entry, textWriter);
             return Task.CompletedTask;
         }
 
@@ -34,16 +34,16 @@ namespace RJDev.Outputter.Sinks.Console
         /// </summary>
         private void Setup()
         {
-            System.Console.OutputEncoding = this.options.ConsoleEncoding;
+            System.Console.OutputEncoding = options.ConsoleEncoding;
 
-            if (this.options.WindowWidth.HasValue)
+            if (options.WindowWidth.HasValue)
             {
-                System.Console.WindowWidth = this.options.WindowWidth.Value;
+                System.Console.WindowWidth = options.WindowWidth.Value;
             }
             
-            if (this.options.WindowHeight.HasValue)
+            if (options.WindowHeight.HasValue)
             {
-                System.Console.WindowHeight = this.options.WindowHeight.Value;
+                System.Console.WindowHeight = options.WindowHeight.Value;
             }
         }
 

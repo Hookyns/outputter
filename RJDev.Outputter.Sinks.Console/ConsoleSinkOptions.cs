@@ -14,7 +14,7 @@ namespace RJDev.Outputter.Sinks.Console
         /// <summary>
         /// Formatting writer.
         /// </summary>
-        internal IFormatingWriter Formatter => this.formatter ??= this.FormattingWriterFactory.Create(this);
+        internal IFormatingWriter Formatter => formatter ??= FormattingWriterFactory.Create(this);
 
         /// <summary>
         /// Theme
@@ -41,8 +41,8 @@ namespace RJDev.Outputter.Sinks.Console
         /// </summary>
         public IFormattingWriterFactory FormattingWriterFactory
         {
-            internal get => this.formattingWriterFactory ?? new DefaultFormattingWriterFactory();
-            set => this.formattingWriterFactory = value;
+            internal get => formattingWriterFactory ?? new DefaultFormattingWriterFactory();
+            set => formattingWriterFactory = value;
         }
 
         /// <summary>
@@ -66,11 +66,11 @@ namespace RJDev.Outputter.Sinks.Console
         /// <param name="theme"></param>
         public ConsoleSinkOptions(ColorTheme theme)
         {
-            this.Theme = theme;
+            Theme = theme;
 
             // System.Console.ResetColor(); // MAYDO: Maybe reset to get real system colors?
-            this.DefaultFontColor = System.Console.ForegroundColor;
-            this.DefaultBackgroundColor = System.Console.BackgroundColor;
+            DefaultFontColor = System.Console.ForegroundColor;
+            DefaultBackgroundColor = System.Console.BackgroundColor;
         }
     }
 }

@@ -4,17 +4,17 @@ namespace RJDev.Outputter
 {
 	public class OutputEntry
     {
-        private object?[] args = new object?[0];
+        private object?[] args = Array.Empty<object?>();
 
         /// <summary>
         /// Message template
         /// </summary>
-        public string MessageTemplate => this.FormattableString?.Format ?? this.Message ?? string.Empty;
+        public string MessageTemplate => FormattableString?.Format ?? Message ?? string.Empty;
 
         /// <summary>
         /// Message args
         /// </summary>
-        public object?[] Args => this.FormattableString?.GetArguments() ?? this.args;
+        public object?[] Args => FormattableString?.GetArguments() ?? args;
 
         /// <summary>
         /// Original formatable string
@@ -38,8 +38,8 @@ namespace RJDev.Outputter
 		/// <param name="entryType"></param>
 		public OutputEntry(FormattableString formattableString, EntryType entryType)
         {
-            this.FormattableString = formattableString;
-            this.EntryType = entryType;
+            FormattableString = formattableString;
+            EntryType = entryType;
 		}
 
         /// <summary>
@@ -50,8 +50,8 @@ namespace RJDev.Outputter
         /// <param name="args"></param>
         public OutputEntry(string message, EntryType entryType, object?[] args)
         {
-            this.Message = message;
-            this.EntryType = entryType;
+            Message = message;
+            EntryType = entryType;
             this.args = args;
         }
         
@@ -60,12 +60,12 @@ namespace RJDev.Outputter
         /// <inheritdoc />
         public override string ToString()
         {
-            if (this.FormattableString == null)
+            if (FormattableString == null)
             {
-                return string.Format(this.Message ?? string.Empty, this.Args);
+                return string.Format(Message ?? string.Empty, Args);
             }
             
-            return this.FormattableString.ToString();
+            return FormattableString.ToString();
         }
 	}
 }
